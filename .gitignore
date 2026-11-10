@@ -5,7 +5,6 @@
 .kubernetes-manifests-*/
 .project
 .skaffold-*.yaml
-.terraform.lock.hcl
 .terraform/*
 .venv/
 .vs/
@@ -26,3 +25,20 @@ obj/
 pkg/
 release/wi-kubernetes-manifests.yaml
 vendor/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+override.tf
+terraform/terraform.tfvars
+
+# Secrets & Credentials
+*-key.json
+credentials*.json
+service-account*.json
+.env
+kubeconfig*
+
