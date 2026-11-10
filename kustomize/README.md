@@ -69,25 +69,15 @@ You need to have a Kubernetes cluster where you will deploy the Online Boutique'
 
 Here is the list of the variations available as Kustomize components that you could leverage:
 
-- [**Change to the Cymbal Shops Branding**](components/cymbal-branding)
-  - Changes all Online Boutique-related branding to Google Cloud's fictitious company — Cymbal Shops. The code adds/enables an environment variable `CYMBAL_BRANDING` in the `frontend` service.
 - [**Integrate with Google Cloud Operations**](components/google-cloud-operations)
-  - Enables Monitoring (Stats), Tracing, and Profiler for various services within Online Boutique. The code adds the appropriare environment variables (`ENABLE_STATS`, `ENABLE_TRACING`, `DISABLE_PROFILER`) for each YAML config file.
-- [**Integrate with Memorystore (Redis)**](components/memorystore)
-  - The default Online Boutique deployment uses the in-cluster `redis` database for storing the contents of its shopping cart. The Memorystore deployment variation overrides the default database with its own Memorystore (Redis) database. These changes directly affect `cartservice`.
-- [**Integrate with Spanner**](components/spanner)
-  - The default Online Boutique deployment uses the in-cluster `redis` database for storing the contents of its shopping cart. The Spanner deployment variation overrides the default database with its own Spanner database. These changes directly affect `cartservice`.
-- [**Integrate with AlloyDB**](components/alloydb)
-  - The default Online Boutique deployment uses the in-cluster `redis` database for storing the contents of its shopping cart. The AlloyDB deployment variation overrides the default database with its own AlloyDB database.
-These changes directly affect `cartservice`.
+  - Enables Monitoring (Stats), Tracing, and Profiler for various services within Online Boutique. The code adds the appropriate environment variables (`ENABLE_STATS`, `ENABLE_TRACING`, `DISABLE_PROFILER`) for each YAML config file.
 - [**Secure with Network Policies**](components/network-policies)
   - Deploy fine granular `NetworkPolicies` for Online Boutique.
 - [**Update the registry name of the container images**](components/container-images-registry)
 - [**Update the image tag of the container images**](components/container-images-tag)
 - [**Add an image tag suffix to the container images**](components/container-images-tag-suffix)
-- [**Do not expose the `frontend` publicly**](components/non-public-frontend)
-- [**Set the `frontend` to manage only one single shared session**](components/single-shared-session)
 - [**Configure `Istio` service mesh resources**](components/service-mesh-istio)
+- [**Deploy without Load Generator**](components/without-loadgenerator)
 
 ### Select variations
 
@@ -95,10 +85,10 @@ To customize Online Boutique with its variations, you need to update the default
 
 #### Use `kustomize edit` to select variations
 
-Here is an example with the [**Cymbal Shops Branding**](components/cymbal-branding) variation, from the `kustomize/` folder, run the command below:
+From the `kustomize/` folder, run:
 
 ```bash
-kustomize edit add component components/cymbal-branding
+kustomize edit add component components/service-mesh-istio
 ```
 
 You could now combine it with other variations, like for example with the [**Google Cloud Operations**](components/google-cloud-operations) variation:
@@ -119,7 +109,7 @@ kind: Kustomization
 resources:
 - base
 components:
-- components/cymbal-branding
+- components/service-mesh-istio
 - components/google-cloud-operations
 ```
 
@@ -133,7 +123,7 @@ kind: Kustomization
 resources:
 - github.com/GoogleCloudPlatform/microservices-demo/kustomize/base
 components:
-- github.com/GoogleCloudPlatform/microservices-demo/kustomize/components/cymbal-branding
+- github.com/GoogleCloudPlatform/microservices-demo/kustomize/components/service-mesh-istio
 - github.com/GoogleCloudPlatform/microservices-demo/kustomize/components/google-cloud-operations
 ```
 

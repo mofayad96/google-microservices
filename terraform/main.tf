@@ -20,7 +20,6 @@ locals {
     "cloudtrace.googleapis.com",
     "cloudprofiler.googleapis.com"
   ]
-  memorystore_apis = ["redis.googleapis.com"]
 }
 
 # Enable Google Cloud APIs
@@ -31,8 +30,7 @@ module "enable_google_apis" {
   project_id                  = var.gcp_project_id
   disable_services_on_destroy = false
 
-  # activate_apis is the set of base_apis and the APIs required by user-configured deployment options
-  activate_apis = concat(local.base_apis, var.memorystore ? local.memorystore_apis : [])
+  activate_apis = local.base_apis
 }
 
 # Create Standard zonal GKE cluster

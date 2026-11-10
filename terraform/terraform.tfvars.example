@@ -19,5 +19,3 @@ name = "boutique-platform"
 region = "europe-west1"
 
 zone = "europe-west1-b"
-
-memorystore = false

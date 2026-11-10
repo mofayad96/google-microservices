@@ -27,3 +27,10 @@ This document tracks changes made to adapt the upstream Google Cloud Online Bout
   - `ServiceMonitor` for `istiod` (`monitoring` namespace, selecting `istio-system`, port `http-monitoring`, 15s scrape interval).
   - `PodMonitor` for `envoy-stats` (`monitoring` namespace, selecting pods with `security.istio.io/tlsMode`, port `http-envoy-prom`, path `/stats/prometheus`, 15s scrape interval).
 - Added GitHub Actions workflow `.github/workflows/terraform.yml` with Workload Identity Federation (WIF) authentication for Terraform linting, validation, and planning.
+
+### 5. Component & Tooling Cleanup
+- **Google CI & Release Tooling Removed**: Deleted `helm-chart/`, `cloudbuild.yaml`, `.github/release-cluster/`, `.github/terraform/`, `docs/releasing/`, and `docs/cloudshell-tutorial.md`.
+- **Unused Kustomize Components Removed**: Deleted `kustomize/components/` variants for `alloydb/`, `spanner/`, `shopping-assistant/`, `cymbal-branding/`, and `single-shared-session/`.
+- **Redundant Ingress Patch Removed**: Deleted `kustomize/components/non-public-frontend/` whose frontend patch conflicts with `service-mesh-istio`.
+- **Memorystore Cleaned Up**: Removed `terraform/memorystore.tf`, `kustomize/components/memorystore/`, and corresponding test/variables in favor of in-cluster Redis.
+- **Preserved Core Lab Assets**: Retained `base`, `service-mesh-istio`, `google-cloud-operations`, and `without-loadgenerator` (with `loadgenerator` active by default for traffic generation).

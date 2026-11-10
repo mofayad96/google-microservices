@@ -34,8 +34,3 @@ variable "zone" {
   description = "Zone of the new GKE cluster"
   default     = "europe-west1-b"
 }
-
-variable "memorystore" {
-  type        = bool
-  description = "If true, Online Boutique's in-cluster Redis cache will be replaced with a Google Cloud Memorystore Redis cache"
-}

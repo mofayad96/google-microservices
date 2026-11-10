@@ -44,7 +44,6 @@ Based on GoogleCloudPlatform/microservices-demo (Apache-2.0)
 > - **GKE Cluster Management Fee**: Standard zonal cluster management fee (`[$X.XX/cluster/month]`).
 > - **Compute Engine Worker Nodes**: 3 x `e2-standard-4` Spot VM instances (`[$X.XX/day]`). Spot instances reduce compute costs by ~60–90% compared to on-demand pricing, but instances may be preempted.
 > - **External Load Balancing**: Cloud Load Balancer / Gateway API IP allocations (`[$X.XX/day]`).
-> - **Cloud Memorystore (Redis)**: Optional; if enabled via `memorystore = true`, provisions a 1GB Basic tier Redis instance (`[$X.XX/month]`).
 > - **Cloud Storage**: GCS bucket for remote Terraform state storage (`[$X.XX/month]`).
 >
 > Always execute the [Teardown](#teardown) instructions when not in use to avoid unexpected billing charges.
@@ -138,7 +137,3 @@ terraform destroy
 
 ---
 
-## License
-
-This project is licensed under the Apache 2.0 License - see the [LICENSE](file:///home/themoosalah/Devops%20projects/new/microservices-demo/LICENSE) file for details.
-Based on GoogleCloudPlatform/microservices-demo (Apache-2.0).

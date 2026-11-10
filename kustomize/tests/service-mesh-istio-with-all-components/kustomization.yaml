@@ -17,7 +17,6 @@ kind: Kustomization
 resources:
 - ../../base
 components:
-- ../../components/cymbal-branding
 - ../../components/google-cloud-operations
 - ../../components/network-policies
 - ../../components/service-mesh-istio
