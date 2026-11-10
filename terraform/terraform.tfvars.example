@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-gcp_project_id = "<project_id_here>"
+gcp_project_id = "<your-project-id>"
+
+name = "boutique-platform"
+
+region = "europe-west1"
+
+zone = "europe-west1-b"
 
 memorystore = false

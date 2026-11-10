@@ -19,9 +19,13 @@ terraform {
       version = "7.10.0"
     }
   }
+  backend "gcs" {
+    prefix = "gke-platform"
+  }
 }
 
 provider "google" {
   project = var.gcp_project_id
   region  = var.region
+  zone    = var.zone
 }

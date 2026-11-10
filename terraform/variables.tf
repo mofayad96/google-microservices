@@ -20,25 +20,19 @@ variable "gcp_project_id" {
 variable "name" {
   type        = string
   description = "Name given to the new GKE cluster"
-  default     = "online-boutique"
+  default     = "boutique-platform"
 }
 
 variable "region" {
   type        = string
   description = "Region of the new GKE cluster"
-  default     = "us-central1"
+  default     = "europe-west1"
 }
 
-variable "namespace" {
+variable "zone" {
   type        = string
-  description = "Kubernetes Namespace in which the Online Boutique resources are to be deployed"
-  default     = "default"
-}
-
-variable "filepath_manifest" {
-  type        = string
-  description = "Path to Online Boutique's Kubernetes resources, written using Kustomize"
-  default     = "../kustomize/"
+  description = "Zone of the new GKE cluster"
+  default     = "europe-west1-b"
 }
 
 variable "memorystore" {
