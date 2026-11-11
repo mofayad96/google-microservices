@@ -18,7 +18,9 @@ terraform {
       source  = "hashicorp/google"
       version = "7.10.0"
     }
+
   }
+  required_version = ">= 1.3.0"
   backend "gcs" {
     prefix = "gke-platform"
   }

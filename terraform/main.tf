@@ -31,6 +31,7 @@ module "enable_google_apis" {
   disable_services_on_destroy = false
 
   activate_apis = local.base_apis
+
 }
 
 # Create Standard zonal GKE cluster
@@ -43,6 +44,15 @@ resource "google_container_cluster" "my_cluster" {
 
   deletion_protection = false
 
+  datapath_provider = "ADVANCED_DATAPATH"
+
+  #this controls whether GKE enable gcp managed for prometheus 
+  # disabled because we will deploy our own prometheus and grafana
+  monitoring_config {
+    managed_prometheus {
+      enabled = false
+    }
+  }
   release_channel {
     channel = "REGULAR"
   }
@@ -64,22 +74,30 @@ resource "google_container_cluster" "my_cluster" {
 }
 
 # Create Node Pool (3 x e2-standard-4, spot, GKE_METADATA)
+# node pool will be 2 due to free tier GCP and defined using var
 resource "google_container_node_pool" "primary_nodes" {
   name       = "${var.name}-node-pool"
   location   = var.zone
   cluster    = google_container_cluster.my_cluster.name
-  node_count = 3
+  node_count = var.node_count
+
 
   node_config {
     machine_type = "e2-standard-4"
     spot         = true
+    disk_size_gb = 50
+
+    service_account = var.node_service_account
 
     workload_metadata_config {
       mode = "GKE_METADATA"
     }
-
+    resource_labels = {
+      "project" = "boutique-platform"
+    }
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
+
   }
 }

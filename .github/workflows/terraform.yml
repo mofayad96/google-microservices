@@ -13,14 +13,14 @@ on:
       - '.github/workflows/terraform.yml'
 
 permissions:
-  id-token: write
   contents: read
-  pull-requests: write
 
 jobs:
-  terraform:
-    name: Terraform Check & Plan
+  validate:
+    name: Terraform Validate
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: terraform
@@ -28,7 +28,48 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Authenticate to Google Cloud via Workload Identity Federation
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Set up TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: latest
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -diff
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Init TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint
+
+  plan:
+    name: Terraform Plan
+    needs: validate
+    if: github.ref == 'refs/heads/main' || vars.WIF_PROVIDER != ''
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    defaults:
+      run:
+        working-directory: terraform
+    env:
+      TF_VAR_gcp_project_id: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP using WIF
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
@@ -37,14 +78,8 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Format Check
-        run: terraform fmt -check -diff
-
       - name: Terraform Init
         run: terraform init -backend-config="bucket=${{ vars.TF_BUCKET }}"
-
-      - name: Terraform Validate
-        run: terraform validate
 
       - name: Terraform Plan
         run: terraform plan -no-color

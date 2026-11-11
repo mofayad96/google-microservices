@@ -34,3 +34,15 @@ variable "zone" {
   description = "Zone of the new GKE cluster"
   default     = "europe-west1-b"
 }
+
+variable "node_count" {
+  type        = number
+  description = "Number of nodes in the GKE cluster"
+  default     = 2
+}
+
+variable "node_service_account" {
+  type        = string
+  description = "Service account to be used by the GKE nodes"
+  default     = "default"
+}
